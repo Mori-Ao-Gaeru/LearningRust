@@ -1,1 +1,1 @@
-# LearningRust
+# Rustの学習用リポジトリ
