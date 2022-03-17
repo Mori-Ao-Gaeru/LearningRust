@@ -1,33 +1,37 @@
+//! Insert Sort
+//! Usage
+//! VEC_SIZE(ランダムで生成する配列数)
+//! MIN(ランダムの下限値)
+//! MAX(ランダムの上限値)
+
 use rand::Rng;
 fn main() {
-  println!("バブルソートアルゴリズムの実装");
-  const VEC_SIZE:usize = 100;
-  let mut random_vec:Vec<i16>= Vec::new();
-  for _i in 0..VEC_SIZE {
-    random_vec.push(rand::thread_rng().gen_range(-1000, 1001));
-  }
-  print!("\n ランダム配列を作成しました \n {:?} \n",random_vec);
-
-  let sorted_vec :Vec<i16> = bubble_sort(random_vec, VEC_SIZE);
-  println!("\n ソート後の配列は \n {:?} \n です", &sorted_vec);
-}
-
-fn bubble_sort (mut input: Vec<i16> , _size:usize) -> Vec<i16> {
-  for _i in 0.._size-1{
-    for j in 0.._size-1 {
-      if input[j] > input[j+1] {
-         input.swap(j,j+1);
-      }
+    println!("挿入ソートの実装");
+    const VEC_SIZE:usize = 100;
+    const MIN:i32 = -1000;
+    const MAX:i32 = 1001; 
+    let mut randarray = [0;VEC_SIZE];
+    for i in 0..VEC_SIZE{
+        randarray[i] = rand::thread_rng().gen_range(MIN, MAX);
     }
-  }
-  input
-}
-
-#[test]
-fn test_bs() {
-  let vec1:Vec<i16> = vec![299, 773, 339, -1000, -227, 579, 182, 1000, -660, 313];
-  let mut vec2:Vec<i16> = vec1.clone();
-  vec2.sort();        // 標準ライブラリの昇順ソート
-//  vec2.swap(0,1);     // この行を入れて配列を入れ替えるとテストは落ちる
-  assert_eq!( vec2, bubble_sort(vec1, 10));
+    println!("\n ソート前の配列は \n {:?} \n です", randarray);
+    let mut sorted = Vec::new();
+    sorted.push(randarray[0]);
+    println!("sort start! {:?}",sorted);
+    for j in 1..randarray.len(){
+        let mut is_inserted= false;
+        for i in 0..sorted.len(){
+            if randarray[j] <= sorted[i]{
+            sorted.insert(i, randarray[j]);
+            println!("{} is inserted in [{}] {:?}",randarray[j],i,sorted);
+            is_inserted = true;
+            break;
+            }
+        }
+        if !is_inserted {
+            sorted.push(randarray[j]);
+            println!("{} is inserted in end {:?}",randarray[j],sorted);
+        }
+    }
+    println!("\n ソート後の配列は \n {:?} \n です", sorted);
 }
