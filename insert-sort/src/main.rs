@@ -10,28 +10,33 @@ fn main() {
     const VEC_SIZE:usize = 100;
     const MIN:i32 = -1000;
     const MAX:i32 = 1001; 
-    let mut randarray = [0;VEC_SIZE];
-    for i in 0..VEC_SIZE{
-        randarray[i] = rand::thread_rng().gen_range(MIN, MAX);
-    }
-    println!("\n ソート前の配列は \n {:?} \n です", randarray);
+    let randvec = create_randvec(VEC_SIZE, MIN, MAX);
+    println!("\n ソート前の配列は \n {:?} \n です", &randvec);
     let mut sorted = Vec::new();
-    sorted.push(randarray[0]);
+    sorted.push(&randvec[0]);
     println!("sort start! {:?}",sorted);
-    for j in 1..randarray.len(){
+    for j in 1..randvec.len(){
         let mut is_inserted= false;
         for i in 0..sorted.len(){
-            if randarray[j] <= sorted[i]{
-            sorted.insert(i, randarray[j]);
-            println!("{} is inserted in [{}] {:?}",randarray[j],i,sorted);
+            if &randvec[j] <= sorted[i]{
+            sorted.insert(i, &randvec[j]);
+            println!("{} is inserted in [{}] {:?}",&randvec[j],i,sorted);
             is_inserted = true;
             break;
             }
         }
         if !is_inserted {
-            sorted.push(randarray[j]);
-            println!("{} is inserted in end {:?}",randarray[j],sorted);
+            sorted.push(&randvec[j]);
+            println!("{} is inserted in end {:?}",&randvec[j],sorted);
         }
     }
     println!("\n ソート後の配列は \n {:?} \n です", sorted);
+}
+
+fn create_randvec(size:usize, min:i32, max:i32) -> Vec<i32>{
+    let mut randvec = Vec::new();
+    for _i in 0..size{
+        randvec.push(rand::thread_rng().gen_range(min, max));
+    }
+    randvec
 }
