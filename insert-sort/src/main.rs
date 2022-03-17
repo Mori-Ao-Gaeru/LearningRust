@@ -48,3 +48,12 @@ fn insert_sort(randvec:&Vec<i32>) -> Vec<i32>{
     }
     sorted
 }
+
+#[test]
+fn test_ins_sort() {
+  let vec1:Vec<i32> = create_randvec(10, -100,100);
+  let mut vec2:Vec<i32> = vec1.clone();
+  vec2.sort();        // 標準ライブラリの昇順ソート
+//  vec2.swap(0,1);     // この行を入れて配列を入れ替えるとテストは落ちる
+  assert_eq!( vec2, insert_sort(&vec1));
+}
